@@ -15,6 +15,6 @@ matplotlib
 ```
 
 ## Hardware setup
-The Lidar is an RPlidar, I used the A1 model.
-
-TODO
+The Lidar is an RPlidar, I used the A1 model. <br>
+Motors: 2 Large motors on B and C <br>
+Sensors: Proximity, Color, Gyro
