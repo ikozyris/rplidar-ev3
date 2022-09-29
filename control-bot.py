@@ -25,7 +25,7 @@ def getch():
     return ch
 
 def threating():
-   subprocess.call(['python3', 'marchaImperial'])
+   Sound.Speak(['You should be afraid of me!'])
 
 def forward():
    motor_left.run_forever(speed_sp=650)
