@@ -6,8 +6,14 @@ from ev3dev2.motor import LargeMotor
 
 motor_left = LargeMotor('outC') #C
 motor_right = LargeMotor('outB') #B
+ir = InfraredSensor('in4')
 
 print("\n=======================")
+
+   if ir.proximity < 10*1.4: # to detect objects closer than about 40cm
+        print("Proximity Alert")
+   
+   sleep (0.01) # Give the CPU a rest
 
 def getch():
     fd = sys.stdin.fileno()
