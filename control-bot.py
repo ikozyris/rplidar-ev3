@@ -1,19 +1,17 @@
 #!/usr/bin/env python
 import subprocess
 import termios, tty, sys
-from ev3dev.ev3 import *
+from ev3dev2.sound import Sound
+from ev3dev2.sensor.lego import InfraredSensor
 from ev3dev2.motor import LargeMotor
 
 motor_left = LargeMotor('outC') #C
 motor_right = LargeMotor('outB') #B
 ir = InfraredSensor('in4')
 
+print("W for forward, S for Backwards, D for right, A for left and Space to stop.")
 print("\n=======================")
 
-   if ir.proximity < 10*1.4: # to detect objects closer than about 40cm
-        print("Proximity Alert")
-   
-   sleep (0.01) # Give the CPU a rest
 
 def getch():
     fd = sys.stdin.fileno()
@@ -25,7 +23,7 @@ def getch():
     return ch
 
 def threating():
-   Sound.Speak(['You should be afraid of me!'])
+   sound.speak('You should be afraid of me!')
 
 def forward():
    motor_left.run_forever(speed_sp=650)
@@ -49,7 +47,10 @@ def stop():
 
 while True:
    k = getch()
-   print(k)
+   if ir.proximity < 10*1.4: # to detect objects closer than about 10cm
+      print("Proximity Alert")
+      print(ir.value()*1.4)
+
    if k == 'n':
       threating()
    if k == 's':
