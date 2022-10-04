@@ -6,11 +6,10 @@ from time import sleep
 gy = GyroSensor() 
 ir = InfraredSensor()
 cl = ColorSensor
-sound = Sound()
 angle = gy.angle
 
     print(cl.reflected_light_intensity)
-    sleep(1)
+    sleep(0.5)
     print(str(angle) + ' degrees')
     sleep(0.5)
     print(ir.value()*1.4)
