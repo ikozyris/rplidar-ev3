@@ -15,6 +15,6 @@ Then q to exit.
 Reads the coordinates created by the previous program and prints the shortest path to the destination.<br>
 Note: the source is the left-most bottom-most corner of the graph (map).
 
-> TODO create-map.cpp
-> creates the map of the area with rplidar slamtec sdk
-> Currently only prints raw reading from the lidar
+> TODO create-map.cpp<br>
+> creates the map of the area with rplidar slamtec sdk<br>
+> Currently only prints raw reading from the lidar (get-distances.cpp)
