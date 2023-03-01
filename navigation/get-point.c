@@ -7,8 +7,8 @@
 
 int main(int argc, char *argv[]) //argv[1] = distance | argv[2] = theta
 {
-        int array[10][10];
-        memset(array, 0, sizeof(array[0][0]) * 10 * 10);
+        int array[9][10];
+        memset(array, 0, sizeof(array[0][0]) * 9 * 10);
         int AB, OA;
         double OB;
         double a,aa; //a in degrees, aa in radians
