@@ -7,10 +7,13 @@
 ### getdistances.cpp
 Gets raw distances of a 360 degrees scan and outputs to stdout.
 
-> TODO create-map.cpp<br>
-> Creates the map of the area based on data by getdistances.
-> The algorithm would be to find the point in a 2d array based on theta(degrees) and distance
-> Needs some trigonometry knowledge.
+### get-point.c
+Find the closest point in a 2d array which has a distance OB and angle a.<br>
+<img src="https://user-images.githubusercontent.com/80053394/222142020-4f6b1e7e-7f2f-4634-bc72-4ad1756abff2.png" alt="cos-sine" width="300"/>
+
+> TODO create-map.cpp
+> Creates the map from the output of getpoint.c
+
 
 ### print-map-ncurses.c
 
