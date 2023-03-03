@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) //argv[1] = distance | argv[2] = theta
                         if (array[i][j] == 1) {
                                 printf("%d ", array[i][j]);
                         } else printf("0 ");
-        }
+                }
         printf("\n");
-    }
+        }
 }
