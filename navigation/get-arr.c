@@ -6,7 +6,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; version 3.
  *
- * octobrowser is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -62,6 +62,19 @@ void create_image()
         }
     }
 
+    rad = 5;
+    
+    for (int y=340; y<360; ++y){
+        for (int x=340; x<360; ++x){
+            if (pow(x-350, 2) + pow(y-350, 2) <= rad * rad){
+                int res = 3 * (y * 700 + x);
+                image_data[res] = 200;
+                image_data[res + 1] = 0;
+                image_data[res + 2] = 0;
+            }
+        }
+    }
+
     save_frame(1, image_data);
 }
 
@@ -75,7 +88,7 @@ int main(int argc, char *argv[]) //argv[1] = input file
         //OB = atof(argv[2]);
         //a = atof(argv[1]);
         FILE *fp = fopen(argv[1],"r");
-        for (int i = 0; i < 360; ++i) { //print 2d array
+        for (int i = 0; i < 10000; ++i) { //print 2d array
                 fscanf(fp,"%lf %lf\n", &a, &OB);
                 OB = OB/10; //convert to centimeters
                 //printf("++++++a=%lf OB=%lf\n", a, OB);
@@ -83,7 +96,7 @@ int main(int argc, char *argv[]) //argv[1] = input file
                 //printf("a in rad=%f\n",aa);
                 AB = sin(aa) * OB;
                 OA = cos(aa) * OB;
-                printf("OA=%d AB=%d\n", OA, AB);
+               // printf("OA=%d AB=%d\n", OA, AB);
                 array[AB+350][OA+350] = 1; //set the point
         }
         fclose(fp);
