@@ -13,11 +13,16 @@ Find the closest point in a 2d array which has a distance OB and angle a.<br>
 
 ### get-arr.c
 Creates a 2d array from output of getdistances (like get-point in a loop). Then it creates
-a 700x700 png from the array using the stb library.<br>
-<img src="https://github.com/ikozyris/rplidar-ev3/assets/80053394/6ce07946-a4fa-4985-8cc5-19c27fe28c8e" alt="circle" width="300"/>
+a 700x700 bmp from the array using the stb library.<br>
+<img src="https://github.com/ikozyris/rplidar-ev3/assets/80053394/6ce07946-a4fa-4985-8cc5-19c27fe28c8e" alt="circle" width="300"/><br>
+Download the STB libraries used in this project:
+```
+wget https://raw.githubusercontent.com/nothings/stb/master/stb_image.h
+wget https://raw.githubusercontent.com/nothings/stb/master/stb_image_write.h
+```
 
 ### print-map-ncurses.c
-> TODO: read graph from get-arr
+> TODO: read graph from get-arr or delete this file
 >
 Press enter when you putted the cursor above the white (A_STANDOUT) space.<br>
 That will be the destination
@@ -26,6 +31,6 @@ Then q to exit.
 ### navigation.cpp
 > TODO: read graph from get-arr
 > 
-Reads the coordinates created by the previous program and prints the shortest path to the destination.<br>
+Reads the coordinates created by the previous program and prints the shortest path to the destination using the A* algorithm (from geeksforgeeks).<br>
 Note: the source is the left-most bottom-most corner of the graph (map).
 
