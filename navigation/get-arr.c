@@ -35,8 +35,8 @@ bool array[700][700];
 void save_frame(int frame, uint8_t * data) // Saves image
 {
     char file[PATH_MAX];
-    sprintf (file, "%06d.png", frame);
-    stbi_write_png(file, 700, 700, 3, data, 700 * 3);
+    sprintf (file, "%06d.bmp", frame);
+    stbi_write_bmp(file, 700, 700, 3, data);
 }
 
 void create_image()
