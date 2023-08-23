@@ -7,7 +7,7 @@ The robot has an EV3 onboard connected to the motors and to a usb hub with addit
 ## Software Installation
 1. Install EV3dev: https://www.ev3dev.org/
 2. Setup usbip: https://www.linux-magazine.com/Issues/2018/208/Tutorial-USB-IP
-3. Install rplidar_sdk: https://github.com/Slamtec/rplidar_sdk  -> [also check this for gcc 11+](https://github.com/Slamtec/rplidar_sdk/pull/64)
+3. Install rplidar_sdk: https://github.com/Slamtec/rplidar_sdk
 
 Now, to use the lidar install ``` python3 ``` and the following libraries:
 ```
