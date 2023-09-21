@@ -12,8 +12,8 @@
 #include <cfloat>
 using namespace std;
 
-#define ROW 9
-#define COL 10
+#define ROW 1000
+#define COL 1000
 
 // Creating a shortcut for int, int pair type
 typedef pair<int, int> Pair;
@@ -79,8 +79,7 @@ void tracePath(cell cellDetails[][COL], Pair dest)
 
 	stack<Pair> Path;
 
-	while (!(cellDetails[row][col].parent_i == row && cellDetails[row][col].parent_j == col))
-	{
+	while (!(cellDetails[row][col].parent_i == row && cellDetails[row][col].parent_j == col)) {
 		Path.push(make_pair(row, col));
 		int temp_row = cellDetails[row][col].parent_i;
 		int temp_col = cellDetails[row][col].parent_j;
@@ -89,8 +88,7 @@ void tracePath(cell cellDetails[][COL], Pair dest)
 	}
 
 	Path.push(make_pair(row, col));
-	while (!Path.empty())
-	{
+	while (!Path.empty()) {
 		pair<int, int> p = Path.top();
 		Path.pop();
 		printf("-> (%d,%d) ", p.first, p.second);
@@ -105,29 +103,25 @@ void tracePath(cell cellDetails[][COL], Pair dest)
 void aStarSearch(int grid[][COL], Pair src, Pair dest)
 {
 	// If the source is out of range
-	if (isValid(src.first, src.second) == false)
-	{
+	if (isValid(src.first, src.second) == false) {
 		printf("Source is invalid\n");
 		return;
 	}
 
 	// If the destination is out of range
-	if (isValid(dest.first, dest.second) == false)
-	{
+	if (isValid(dest.first, dest.second) == false) {
 		printf("Destination is invalid\n");
 		return;
 	}
 
 	// Either the source or the destination is blocked
-	if (isUnBlocked(grid, src.first, src.second) == false || isUnBlocked(grid, dest.first, dest.second) == false)
-	{
+	if (isUnBlocked(grid, src.first, src.second) == false || isUnBlocked(grid, dest.first, dest.second) == false) {
 		printf("Source or the destination is blocked\n");
 		return;
 	}
 
 	// If the destination cell is the same as source cell
-	if (isDestination(src.first, src.second, dest) == true)
-	{
+	if (isDestination(src.first, src.second, dest) == true) {
 		printf("We are already at the destination\n");
 		return;
 	}
@@ -182,8 +176,7 @@ void aStarSearch(int grid[][COL], Pair src, Pair dest)
 	// the destination is not reached.
 	bool foundDest = false;
 
-	while (!openList.empty())
-	{
+	while (!openList.empty()) {
 		pPair p = *openList.begin();
 
 		// Remove this vertex from the open list
@@ -221,12 +214,10 @@ void aStarSearch(int grid[][COL], Pair src, Pair dest)
 		//----------- 1st Successor (North) ------------
 
 		// Only process this cell if this is a valid one
-		if (isValid(i - 1, j) == true)
-		{
+		if (isValid(i - 1, j) == true) {
 			// If the destination cell is the same as the
 			// current successor
-			if (isDestination(i - 1, j, dest) == true)
-			{
+			if (isDestination(i - 1, j, dest) == true) {
 				// Set the Parent of the destination cell
 				cellDetails[i - 1][j].parent_i = i;
 				cellDetails[i - 1][j].parent_j = j;
@@ -238,8 +229,7 @@ void aStarSearch(int grid[][COL], Pair src, Pair dest)
 			// If the successor is already on the closed
 			// list or if it is blocked, then ignore it.
 			// Else do the following
-			else if (closedList[i - 1][j] == false && isUnBlocked(grid, i - 1, j) == true)
-			{
+			else if (closedList[i - 1][j] == false && isUnBlocked(grid, i - 1, j) == true) {
 				gNew = cellDetails[i][j].g + 1.0;
 				hNew = calculateHValue(i - 1, j, dest);
 				fNew = gNew + hNew;
@@ -270,8 +260,7 @@ void aStarSearch(int grid[][COL], Pair src, Pair dest)
 		//----------- 2nd Successor (South) ------------
 
 		// Only process this cell if this is a valid one
-		if (isValid(i + 1, j) == true)
-		{
+		if (isValid(i + 1, j) == true) {
 			// If the destination cell is the same as the
 			// current successor
 			if (isDestination(i + 1, j, dest) == true)
@@ -631,7 +620,7 @@ void aStarSearch(int grid[][COL], Pair src, Pair dest)
 }
 
 // Driver program to test above function
-int main() {
+int main(int argc, char *argv[]) {
 	/* Description of the Grid-
 	1--> The cell is not blocked
 	0--> The cell is blocked */
@@ -648,10 +637,9 @@ int main() {
 	// Source is the left-most bottom-most corner
 	Pair src = make_pair(8, 0);
 	int y,x;
-	FILE *fp;
-	fp = fopen("y-x", "r");
-	fscanf(fp,"%d %d",&y,&x);
-	fclose(fp);
+	y = atoi(argv[1]);
+	x = atoi(argv[2]);
+	
 	// Destination is the left-most top-most corner
 	Pair dest = make_pair(y, x);
 

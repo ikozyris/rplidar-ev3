@@ -27,81 +27,37 @@
 #include "stb_image_write.h"
 #include <time.h>
 #include <unistd.h>
- 
-bool array[700][700];
 
-#define PI 3.141592653589793	//I only remeber 15 decimal points :)
+#define p 0.0174532925199432958	// π / 180
 
-void save_frame(int frame, uint8_t * data) // Saves image
+uint8_t image_data[1300 * 1300 * 3];
+
+void save_frame(int frame) // Saves image
 {
-    char file[PATH_MAX];
-    sprintf (file, "%06d.bmp", frame);
-    stbi_write_bmp(file, 700, 700, 3, data);
+    char file[16];
+    sprintf(file, "%06d.bmp", frame);
+    stbi_write_bmp(file, 1300, 1300, 3, image_data);
 }
 
-void create_image()
+int create_image(char *input)
 {
-    uint8_t image_data[700 * 700 * 3];
+    memset(image_data, 255, 1300 * 1300);
+    int AB, OA;
+    float OB, a;
 
-    int rad = 128;
-    
-    for (int y=0; y<700; ++y){
-        for (int x=0; x<700; ++x){
-            if (array[y][x]){
-                int res = 3 * (y * 700 + x);
-                image_data[res] = 0;
-                image_data[res + 1] = 0;
-                image_data[res + 2] = 0;
-            }
-            else {
-                int res = 3 * (y * 700 + x);
-                image_data[res] = 255;
-                image_data[res + 1] = 255;
-                image_data[res + 2] = 255;
-            }
-        }
-    }
+    FILE *fp = fopen(input, "r");
+    for (int i = 0; i < 10000; ++i) { //print 2d array
+        fscanf(fp,"%lf %lf\n", &a, &OB);
+       	OB = OB/10; //convert to centimeters
+       	//printf("++++++a=%lf OB=%lf\n", a, OB);
+    	a *= p; //find a in radians
+	   	//printf("a in rad=%f\n",aa);
+	   	AB = sin(a) * OB;
+	   	OA = cos(a) * OB;
+    	// printf("OA=%d AB=%d\n", OA, AB);
+    	image_data[(AB + 650) * 1300 + OA + 650] = 0;
+	}
 
-    rad = 5;
-    
-    for (int y=340; y<360; ++y){
-        for (int x=340; x<360; ++x){
-            if (pow(x-350, 2) + pow(y-350, 2) <= rad * rad){
-                int res = 3 * (y * 700 + x);
-                image_data[res] = 200;
-                image_data[res + 1] = 0;
-                image_data[res + 2] = 0;
-            }
-        }
-    }
-
-    save_frame(1, image_data);
-}
-
-int main(int argc, char *argv[]) //argv[1] = input file
-{
-        memset(array, 0, sizeof(array[0][0]) * (700) * (700));
-        int AB, OA;
-        double OB;
-        double a,aa; //a in degrees, aa in radians
-
-        //OB = atof(argv[2]);
-        //a = atof(argv[1]);
-        FILE *fp = fopen(argv[1],"r");
-        for (int i = 0; i < 10000; ++i) { //print 2d array
-                fscanf(fp,"%lf %lf\n", &a, &OB);
-                OB = OB/10; //convert to centimeters
-                //printf("++++++a=%lf OB=%lf\n", a, OB);
-                aa = a * PI/180; //find a in radians
-                //printf("a in rad=%f\n",aa);
-                AB = sin(aa) * OB;
-                OA = cos(aa) * OB;
-               // printf("OA=%d AB=%d\n", OA, AB);
-                array[AB+350][OA+350] = 1; //set the point
-        }
-        fclose(fp);
-
-        create_image();
-
-        return 0;
+    save_frame(1);
+    return 0;
 }

@@ -47,8 +47,5 @@ def run():
 if __name__ == '__main__':
     run()
 
-#except KeyboardInterrupt:
-#    print('Stoping.')
-#lidar.stop()
-#lidar.disconnect()
-
+lidar.stop()
+lidar.disconnect()
