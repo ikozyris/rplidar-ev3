@@ -30,8 +30,9 @@ sl::IChannel *_channel;
 // driver instance
 sl::ILidarDriver *drv;
 
-int connect(std::string port, int baudrate)
+int connect()
 {
+    std::string port = "/dev/ttyUSB0"; int baudrate = 115200;
     sl_lidar_response_device_info_t devinfo;
     bool CS = false; // connected
     drv = *sl::createLidarDriver();
@@ -59,7 +60,6 @@ int connect(std::string port, int baudrate)
     drv->setMotorSpeed();
     // start scan...
     //drv->startScan(0, 1);
-    drv->startScanExpress(0, SL_LIDAR_CONF_SCAN_COMMAND_BOOST);
     return 0;
 
 error:
@@ -91,10 +91,10 @@ int write_distances(char *output)
     return 0;
 }
 
-int disconnect()
+int _disconnect()
 {
     drv->stop();
-    drv->setMotorSpeed(0);
+    drv->setMotorSpeed();
     // done!
     drv = NULL;
     delete drv;
