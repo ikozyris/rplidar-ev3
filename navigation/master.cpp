@@ -3,12 +3,6 @@
 #include <cmath>
 #include <cstdbool>
 #include <cstdint>
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
-#define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "stb_image_write.h"
-#include <ctime>
-#include <unistd.h>
 
 #include "lidar-utils.cpp"
 #include <gtk/gtk.h>
@@ -16,15 +10,8 @@
 #define PI	3.141592653589793	  // I only remeber 15 decimal points :)
 #define p 	0.0174532925199432958 // π / 180
 
-uint8_t image_data[700 * 700 * 3];
+uint8_t image_data[700 * 700 * 3 + 5];
 bool scan = false;
-
-void save_frame(int frame) // Saves image
-{
-    char file[PATH_MAX];
-    sprintf(file, "%02d.bmp", frame);
-    stbi_write_bmp(file, 700, 700, 3, image_data);
-}
 
 int create_image2()
 {
@@ -35,32 +22,32 @@ int create_image2()
     drv->ascendScanData(nodes, count);
 
     memset(image_data, 255, 700 * 700 * 3);
-    int AB, OA;
+    uint8_t AB, OA;
     float OB;
     float a; // in radians
 
-    for (size_t i = 0; i < count; ++i) {
-    	if (nodes[i].quality == 0 || (nodes[i].dist_mm_q2) > 4000)
+    for (size_t i = count; i != 0; --i) {
+    	if (nodes[i].quality == 0 || (nodes[i].dist_mm_q2) > 7000)
 			continue;
-        OB = (nodes[i].dist_mm_q2 / 4.0f) / 3.0f;
+        OB = (nodes[i].dist_mm_q2 / 4.0f) / 5.0f;
         //printf("++++++a=%lf OB=%lf\n", a, OB);
         a = ((nodes[i].angle_z_q14 * 90.f) / 16384.f) * p; //find a in radians
         //printf("a in rad=%f\n",aa);
         AB = sin(a) * OB;
         OA = cos(a) * OB;
         // printf("OA=%d AB=%d\n", OA, AB);
-        image_data[((AB + 350) * 700 + OA + 350) * 3] = 0;
-        image_data[((AB + 350) * 700 + OA + 350) * 3 + 1] = 0;
-        image_data[((AB + 350) * 700 + OA + 350) * 3 + 2] = 0;
+        image_data[((AB + 350) * 700 + OA + 350) * 3]     = 0; // R
+        image_data[((AB + 350) * 700 + OA + 350) * 3 + 1] = 0; // G
+        image_data[((AB + 350) * 700 + OA + 350) * 3 + 2] = 0; // B
     }
 
     //save_frame(1);
     return 0;
 }
 
-inline void start_scan() { scan = true; drv->startScanExpress(0, SL_LIDAR_CONF_SCAN_COMMAND_BOOST); }
-inline void stop_scan() { scan = false; drv->stop();}
-inline void disconnect() { _disconnect(); }
+inline void start_scan() { drv->startScanExpress(0, SL_LIDAR_CONF_SCAN_COMMAND_BOOST); scan = true; }
+inline void stop_scan()  { scan = false; drv->stop();}
+inline void disconnect() { scan = false; _disconnect(); }
 
 static gboolean on_timeout(gpointer user_data)
 {
@@ -114,7 +101,7 @@ int main(int argc, char *argv[])
 
   	// create a new window, and set its title
 	g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-	g_timeout_add(333 /* milliseconds */, on_timeout, image);
+	g_timeout_add(250 /* milliseconds */, on_timeout, image);
 	gtk_widget_show_all(window);
 	gtk_main();
 
