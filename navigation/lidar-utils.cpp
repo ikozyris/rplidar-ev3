@@ -53,7 +53,7 @@ int connect()
             goto error;
         }
     } if (CS == false) {
-        fprintf(stderr, "Error, cannot bind to the specified serial port /dev/ttyUSB0.\n"); //end of checks
+        fprintf(stderr, "Error, cannot bind to the serial port /dev/ttyUSB0.\n"); //end of checks
         goto error;
     }
 

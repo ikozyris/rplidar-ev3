@@ -22,7 +22,7 @@ int create_image2()
     drv->ascendScanData(nodes, count);
 
     memset(image_data, 255, 700 * 700 * 3);
-    uint8_t AB, OA;
+    int AB, OA;
     float OB;
     float a; // in radians
 
@@ -41,7 +41,6 @@ int create_image2()
         image_data[((AB + 350) * 700 + OA + 350) * 3 + 2] = 0; // B
     }
 
-    //save_frame(1);
     return 0;
 }
 
@@ -101,7 +100,7 @@ int main(int argc, char *argv[])
 
   	// create a new window, and set its title
 	g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-	g_timeout_add(250 /* milliseconds */, on_timeout, image);
+	g_timeout_add(333 /* milliseconds */, on_timeout, image);
 	gtk_widget_show_all(window);
 	gtk_main();
 
