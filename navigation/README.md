@@ -10,6 +10,7 @@ Gets raw distances of a 360 degrees scan and outputs to stdout.
 ### get-point.c
 Find the closest point in a 2d array which has a distance OB and angle a.<br>
 <img src="https://user-images.githubusercontent.com/80053394/222142020-4f6b1e7e-7f2f-4634-bc72-4ad1756abff2.png" alt="cosine-sine" width="300"/>
+> note: OA = cos(a) * OB , not sin()
 
 ### get-arr.c
 Creates a 2d array from output of getdistances (like get-point in a loop). Then it creates
